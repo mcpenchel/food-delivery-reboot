@@ -7,7 +7,7 @@ class EmployeeRepository
     @csv_file_path = csv_file_path
     @employees = []
 
-    load_csv
+    load_csv if File.exist?(@csv_file_path)
   end
 
   def all_delivery_guys

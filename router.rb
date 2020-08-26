@@ -1,9 +1,14 @@
 class Router
 
-  def initialize(meals_controller, customers_controller, sessions_controller)
+  # STUDENTS!!!!!
+  # Se com dor de cabeça porque passou da marcação da linha,
+  # e a ofensa está tirando seu sono quando tu roda rake,
+  # refatore o initialize para receber uma hash de atributos
+  def initialize(meals_controller, customers_controller, sessions_controller, orders_controller)
     @meals_controller     = meals_controller
     @customers_controller = customers_controller
     @sessions_controller  = sessions_controller
+    @orders_controller    = orders_controller
     @running = true
   end
 
@@ -42,8 +47,8 @@ class Router
 
   def route_to_delivery_actions(user_action)
     case user_action
-    when 1 then puts "TO-DO: Marcar meu pedido como entregue"
-    when 2 then puts "TO-DO: Listar meus pedidos pendentes"
+    when 1 then @orders_controller.mark_as_delivered(@employee)
+    when 2 then @orders_controller.list_my_orders(@employee)
     when 8 then @employee = nil
     when 9
       @running  = false
@@ -70,8 +75,8 @@ class Router
     when 2 then @meals_controller.add
     when 3 then @customers_controller.list
     when 4 then @customers_controller.add
-    when 5 then puts "TO-DO: Criar novo pedido"
-    when 6 then puts "TO-DO: Listar pedidos pendentes"
+    when 5 then @orders_controller.add
+    when 6 then @orders_controller.list_undelivered_orders
     when 8 then @employee = nil
     when 9
       @running  = false
